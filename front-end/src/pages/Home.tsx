@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 export default function Home() {
   const [urlList, setUrlList] = useState<string[]>([]);
 
+  const createShortedUrl =  async (event : React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+  }
   return (
     <>
       <div className='w-full h-full flex  justify-center p-10'>
@@ -14,7 +19,7 @@ export default function Home() {
               by Mohammed Hilali
               </span>
           </h1>
-          <form className='m-5 text-center max-w-200 w-full'>
+          <form onSubmit ={createShortedUrl} className='m-5 text-center max-w-200 w-full'>
             <label htmlFor="url" 
               className='text-whitesmooke w-full text-3xl font-medium'> 
               Paste the URL to be shortened
@@ -26,7 +31,7 @@ export default function Home() {
               name='longestUrl'
               className='py-3 px-5 focus:outline-3 bg-whitesmooke focus:outline-blue-700 w-full text-2xl text-black rounded-tl-xl rounded-bl-xl'
               placeholder='https://example.com/user/data/id?page="home"' />
-            <button 
+            <button
               type="submit"
               className=' bg-blue-700 active:bg-blue-900 text-white text-2xl py-3 rounded-tr-xl rounded-br-xl px-5'>
               create
