@@ -149,14 +149,24 @@ Frontend runs on: `http://localhost:5173`
 
 ## Running Tests
 
+### With Makefile
+
+```bash
+# Run backend tests
+make all && make test
+
+# Run backend e2e tests
+make all && make test:e2e
+```
+
 ### With Docker
 
 ```bash
 # Run backend tests
-docker-compose exec server npm run test
+docker exec server npm run test
 
 # Run backend e2e tests
-docker-compose exec server npm run test:e2e
+docker exec server npm run test:e2e
 ```
 
 ### Without Docker

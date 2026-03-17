@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/prismadb/prisma.service";
+import { PrismaService } from "../prismadb/prisma.service";
 import { UrlEntity } from "./entities/url.entity";
 
 
@@ -29,7 +29,7 @@ export class UrlsService {
 
 
     async findUrl (shortCode : string) : Promise<string> {
-        const url = this.prisma.url.findUnique({
+        const url = await this.prisma.url.findUnique({
             where : {shortCode}
         });
         if (!url) throw new NotFoundException('Short Url not found');

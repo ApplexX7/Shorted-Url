@@ -9,7 +9,6 @@ type UrlEntity = {
 
 export default function Urls() {
   const [urls, setUrls] = useState<UrlEntity[]>([]);
-  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);

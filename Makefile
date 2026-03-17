@@ -26,6 +26,12 @@ logs-server:
 logs-client:
 	$(COMPOSE) logs -f client
 
+test:
+	docker exec server npm run test
+	
+test-e2e:
+	docker exec server npm run test:e2e
+
 restart:
 	$(COMPOSE) restart
 

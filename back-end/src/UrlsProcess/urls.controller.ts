@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Param, Res, Query} from "@nestjs/common";
 import { Response } from "express";
 import { UrlsService } from "./urls.service";
 import { UrlEntity } from "./entities/url.entity";
+import { UrlDto } from "./dto/create-url.dto";
 
 
 @Controller()
@@ -14,8 +15,8 @@ export class UrlsController {
     }
 
     @Post('/post/newURl')
-    createshortUrls(@Body() body: {longUrl: string}) : Promise<UrlEntity>  {
-        return this.urlsservice.shortedNewUrls(body.longUrl);
+    createshortUrls(@Body() body: UrlDto) : Promise<UrlEntity>  {
+        return this.urlsservice.shortedNewUrls(body.longetUrl);
     }
 
     @Get(':shortCode')
