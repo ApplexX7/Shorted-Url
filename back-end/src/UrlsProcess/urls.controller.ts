@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Res } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, Res, Query} from "@nestjs/common";
 import { Response } from "express";
 import { UrlsService } from "./urls.service";
 import { UrlEntity } from "./entities/url.entity";
@@ -9,8 +9,8 @@ export class UrlsController {
     constructor(private readonly urlsservice: UrlsService){}
 
     @Get('/urls')
-    getUrls() : Promise<UrlEntity[]> {
-        return this.urlsservice.getUrls();
+    getUrls(@Query('page') page: number = 1, @Query('limit') limit: number = 15) {
+        return this.urlsservice.getUrls(Number(page), Number(limit));
     }
 
     @Post('/post/newURl')

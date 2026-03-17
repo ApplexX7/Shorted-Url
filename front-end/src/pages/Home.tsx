@@ -4,10 +4,32 @@ import React from 'react';
 
 export default function Home() {
   const [urlList, setUrlList] = useState<string[]>([]);
+  const [message, setMessage] = useState<string | null>(null);
 
-  const createShortedUrl =  async (event : React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const createShortedUrl = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const data = Object.fromEntries(formData.entries());
+    const longUrl = data.longestUrl;
 
+    try {
+      const res = await fetch('http://localhost:3000/post/newURl', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ longUrl })
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        setMessage(error.message);
+      } else {
+        const newUrl = await res.json();
+        setUrlList([newUrl, ...urlList]);
+        setMessage(null);
+      }
+    } catch (err) {
+      setMessage('Something went wrong, please try again');
+    }
   }
   return (
     <>
@@ -39,19 +61,21 @@ export default function Home() {
           </div>
           </form>
           <div>
-              <p className='text-white text-xl font-medium '>List of Url that you shorted!</p>
+              <p className='text-white text-center text-xl font-medium mb-5 '>List of Shorted Url!</p>
               {!urlList.length ? (
               <p className='text-white text-center font-medium'>No url was founded :(</p>
               ) : (
-                <ul>
-                  {
-                    urlList.map((url, index) => (
-                      <li key={index}>
-                        {url}
-                      </li>
-                    ))
-                  }
-                </ul>
+                <ul className='flex flex-col gap-2'>
+                        {urlList.slice(0, 15).map((url) => (
+                        <li key={url.id} className='text-white'>
+                        <span className='text-blue-400'>
+                          localhost:3000/{url.shortCode}
+                        </span>
+                        {' → '}
+                        {url.longUrl}
+                        </li>
+                  ))}
+                 </ul>
               )}
           </div>
           <Link to="./urls" 

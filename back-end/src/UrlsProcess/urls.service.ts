@@ -8,10 +8,12 @@ export class UrlsService {
     constructor (private readonly prisma: PrismaService){}
 
 
-    async getUrls() : Promise<UrlEntity[]> {
+    async getUrls(page: number = 1, limit: number = 15): Promise<UrlEntity[]> {
         return this.prisma.url.findMany({
-            orderBy : {createdAt : 'desc'}
-        })
+            orderBy: { createdAt: 'desc' },
+            skip: (page - 1) * limit,
+            take: limit,
+        });
     }
 
     async shortedNewUrls(longUrl : string) : Promise<UrlEntity>{
